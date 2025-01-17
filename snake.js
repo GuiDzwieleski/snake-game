@@ -8,6 +8,7 @@ const canvasSize = 400;
 let snake = [{ x: 160, y: 160 }];
 let direction = 'right';
 let food = { x: 200, y: 200 };
+let gameOver = false; // Variável de controle de game over
 
 // Função para desenhar o jogo
 function draw() {
@@ -22,6 +23,13 @@ function draw() {
     // Desenhando a comida
     ctx.fillStyle = 'red';
     ctx.fillRect(food.x, food.y, gridSize, gridSize)
+
+    // Se o jogo acabou, desenha a tela de Game Over
+ if (gameOver) {
+    ctx.fillStyle = 'black';
+    ctx.font = '30px Arial';
+    ctx.fillText('Game Over', canvasSize / 4, canvasSize / 2);
+}
 }
 
 // Função para mover a cobrinha
@@ -32,6 +40,18 @@ function move() {
     if (direction === 'left') head.x -= gridSize;
     if (direction === 'up') head.y -= gridSize;
     if (direction === 'down') head.y += gridSize;
+
+    // Verificando colisão com as bordas
+    if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
+        gameOver = true;
+        return; // Se o jogo acabou, não move a cobrinha (Bordas)
+    }
+
+    // Verificando colisão com o próprio corpo
+    if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+        gameOver = true;
+        return; // Se o jogo acabou, não move a cobrinha (Corpo)
+    }
 
     snake.unshift(head);
 
@@ -59,8 +79,10 @@ function changeDirection(event) {
 
 // Função para atualizar o jogo
 function updateGame() {
-    move();
-    draw();
+    if (!gameOver) { // Só atualiza o jogo se não estiver em estado de game over
+        move();
+        draw();
+        }
 }
 
 // Função principal que atualiza a cada 100ms
