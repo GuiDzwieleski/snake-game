@@ -31,6 +31,61 @@ body {
 
 }
 
+#scoreboard {
+
+    margin-top: 20px;
+    text-align: center;
+
+}
+
+#scoreTable {
+
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#scoreTable th, #scoreTable td {
+
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+#initialsModal {
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#initialsModal h2 {
+
+    margin-top: 0;
+
+}
+
+#initialsModal form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#initialsModal input {
+
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+}
+
 /* Estilos de botão */
 button {
 
@@ -42,7 +97,7 @@ button {
 }
 
 button:hover {
-    
+
     background-color: #ddd;
 
 }

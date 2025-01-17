@@ -21,7 +21,33 @@
 
      <!-- Botão para reiniciar o jogo -->
       <button onclick="restartGame()">Reiniciar o jogo</button>
-      
+
+    <!-- Scoreboard -->
+     <section id="scoreboard">
+        <h2>Ranking de Pontuações</h2>
+        <table id="scoreTable">
+            <thead>
+                <tr>
+                    <th>Posição</th>
+                    <th>Jogador</th>
+                    <th>Pontuação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- As linhas de pontuação serão adicionadas aqui -->
+            </tbody>
+        </table>
+     </section>
+
+     <!-- Formulário para inserir as iniciais após o jogo -->
+      <div id="initialsModal" style="display: none;">
+        <h2>Digite suas iniciais</h2>
+        <form id="initialsForm">
+            <label for="initials">Iniciais (3 letras):</label>
+            <input type="text" id="initials" maslength="3" required>
+        </form>
+      </div>
+
     <script src="snake.js"></script>
     
 </body>

@@ -9,6 +9,7 @@ let snake = [{ x: 160, y: 160 }];
 let direction = 'right';
 let food = { x: 200, y: 200 };
 let score = 0; // Variável de pontuação
+let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 let gameOver = false; // Variável de controle de game over
 let gameInterval; // Variável para armazenar temporizador de 100ms
 
@@ -88,6 +89,54 @@ function changeDirection(event) {
     if (event.key === 'ArrowDown' && direction !== 'up') direction = 'down';
     if (event.key === 'ArrowLeft' && direction !== 'right') direction = 'left';
     if (event.key === 'ArrowRight' && direction !== 'left') direction = 'right';
+}
+
+// Função para salvar a pontuação com iniciais
+function saveScore(initials, score) {
+    // Adiciona a pontuação à lista
+    highScores.push({ initials, score });
+
+    // Ordena as pontuações em ordem decescente
+    highScores.sort((a, b) => b.score - a.score);
+
+    // Mantém apenas as 10 melhores pontuações
+    highScores = highScores.slice(0, 10);
+
+    // Armazena no localstorage
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+
+    // Atualiza a tabela
+    updateScoreTable();
+}
+
+// Função para atualizar a tabela de pontuações
+function updateScoreTable() {
+    const scoreTableBody = document.querySelector('#scoreTable tbody');
+    scoreTableBody.innerHTML = '';
+
+    highScores.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${entry.initials}</td>
+        <td>${entry.score}</td>
+        `;
+    })
+}
+
+// Exibir o modal para inserir iniciais
+function showInitialsModal() {
+    const modal = document.getElementById('initialsModal');
+    modal.style.display = 'block';
+
+    const form = document.getElementById('initialsForm');
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const initials = document.getElementById('initials').value.toUpperCase();
+        saveScore(initials, score);
+        modal.style.display = 'none';
+        restartGame();
+    };
 }
 
 // Função para atualizar o jogo
