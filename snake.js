@@ -9,6 +9,7 @@ let snake = [{ x: 160, y: 160 }];
 let direction = 'right';
 let food = { x: 200, y: 200 };
 let gameOver = false; // Variável de controle de game over
+let gameInterval; // Variável para armazenar temporizador de 100ms
 
 // Função para desenhar o jogo
 function draw() {
@@ -29,7 +30,11 @@ function draw() {
     ctx.fillStyle = 'black';
     ctx.font = '30px Arial';
     ctx.fillText('Game Over', canvasSize / 4, canvasSize / 2);
-}
+
+    // Texto informando sobre a tecla "R" para reiniciar
+    ctx.font = '20px Arial';
+    ctx.fillText('Pressione "R" para reiniciar', canvasSize / 4, canvasSize / 1.8);
+ }
 }
 
 // Função para mover a cobrinha
@@ -88,9 +93,33 @@ function updateGame() {
 // Função principal que atualiza a cada 100ms
 function gameLoop() {
     updateGame();
-    setTimeout(gameLoop, 100);
+    gameInterval = setTimeout(gameLoop, 100); // Armazenando o temporizador em uma variável
+}
+
+// Função para reiniciar o jogo
+function restartGame() {
+    // Resetando o estado do jogo
+    snake = [{ x: 160, y: 160 }];
+    direction = 'right';
+    food = { x: 200, y: 200 };
+    gameOver = false; // Resetando o estado de Game Over
+    ctx.clearRect(0, 0, canvasSize, canvasSize) // Limpando a tela
+
+    // Limpa o temporizador anterior
+ clearTimeout(gameInterval);
+
+ // Inicia o loop novamente
+ gameLoop();
+
 }
 
 // Iniciando o jogo
-document.addEventListener('keydown', changeDirection);
-gameLoop();
+document.addEventListener('keydown', (event) => {
+    changeDirection(event);
+    // Verificando se a tecla "R" foi pressionada para reiniciar o jogo
+    if (gameOver && event.key === 'r') {
+        restartGame();
+        gameLoop(); // Reiniciando o jogo após o Game Over
+    }
+});
+gameLoop(); // Começando o jogo
