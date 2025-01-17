@@ -104,6 +104,11 @@ function gameLoop() {
     gameInterval = setTimeout(gameLoop, 100); // Armazenando o temporizador em uma variável
 }
 
+// Função para atualizar o painel de pontuação
+function updateScore() {
+    document.getElementById('score').innerText = score;
+}
+
 // Função para reiniciar o jogo
 function restartGame() {
     // Resetando o estado do jogo

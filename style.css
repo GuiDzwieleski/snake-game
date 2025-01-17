@@ -1,0 +1,48 @@
+/* Estilos gerais para o site */
+
+body {
+
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+
+#gameCanvas {
+
+    border: 1px solid #000;
+    margin-bottom: 20px;
+
+}
+
+/* Painel de Pontuação */
+#scorePanel {
+
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+
+}
+
+/* Estilos de botão */
+button {
+
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+
+}
+
+button:hover {
+    
+    background-color: #ddd;
+
+}

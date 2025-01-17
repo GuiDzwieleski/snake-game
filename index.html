@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         canvas { border: 1px solid black; margin: 0 auto; display: block; }
     </style>
 </head>
 <body>
 
+    <!-- Canvas para o jogo -->
     <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <!-- Painel de pontuação -->
+     <div id="scorePanel">
+        Pontuação: <span id="score">0</span>
+     </div>
+
+     <!-- Botão para reiniciar o jogo -->
+      <button onclick="restartGame()">Reiniciar o jogo</button>
+      
     <script src="snake.js"></script>
     
 </body>
