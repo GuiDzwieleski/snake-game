@@ -8,6 +8,7 @@ const canvasSize = 400;
 let snake = [{ x: 160, y: 160 }];
 let direction = 'right';
 let food = { x: 200, y: 200 };
+let score = 0; // Variável de pontuação
 let gameOver = false; // Variável de controle de game over
 let gameInterval; // Variável para armazenar temporizador de 100ms
 
@@ -35,6 +36,11 @@ function draw() {
     ctx.font = '20px Arial';
     ctx.fillText('Pressione "R" para reiniciar', canvasSize / 4, canvasSize / 1.8);
  }
+
+ // Exibir a pontuação na tela
+ ctx.fillStyle = 'black';
+ ctx.font = '20px Arial';
+ ctx.fillText('Pontuação: ' + score, 10, 20);
 }
 
 // Função para mover a cobrinha
@@ -60,8 +66,10 @@ function move() {
 
     snake.unshift(head);
 
+    // Verificando se a cobrinha comeu a comida
     if (head.x === food.x && head.y === food.y) {
         food = generateFood();
+        score++; // Incrementando a pontuação
     } else {
         snake.pop();
     }
@@ -102,6 +110,7 @@ function restartGame() {
     snake = [{ x: 160, y: 160 }];
     direction = 'right';
     food = { x: 200, y: 200 };
+    score = 0; // Resetando a pontuação
     gameOver = false; // Resetando o estado de Game Over
     ctx.clearRect(0, 0, canvasSize, canvasSize) // Limpando a tela
 
