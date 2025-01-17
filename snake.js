@@ -119,7 +119,6 @@ document.addEventListener('keydown', (event) => {
     // Verificando se a tecla "R" foi pressionada para reiniciar o jogo
     if (gameOver && event.key === 'r') {
         restartGame();
-        gameLoop(); // Reiniciando o jogo após o Game Over
     }
 });
 gameLoop(); // Começando o jogo
