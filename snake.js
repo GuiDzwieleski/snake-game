@@ -13,6 +13,13 @@ let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 let gameOver = false; // Variável de controle de game over
 let gameInterval; // Variável para armazenar temporizador de 100ms
 
+// Atualizar a leaderboard ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    updateScoreTable();
+})
+
+console.log('highScores inicial:', highScores)
+
 // Função para desenhar o jogo
 function draw() {
     ctx.clearRect(0, 0, canvasSize, canvasSize);
@@ -100,13 +107,19 @@ function saveScore(initials, score) {
     highScores.sort((a, b) => b.score - a.score);
 
     // Mantém apenas as 10 melhores pontuações
-    highScores = highScores.slice(0, 10);
+    if (highScores.length > 10) {
+        highScores.pop(); // Remove o último item (o menor, devido à orientação)
+    }
 
     // Armazena no localstorage
     localStorage.setItem('highScores', JSON.stringify(highScores));
 
-    // Atualiza a tabela
+    // Log para verificar os dados
+    console.log('Pontuações Salvas:', highScores);
+
+    // Atualize a tabela
     updateScoreTable();
+
 }
 
 // Função para atualizar a tabela de pontuações
@@ -121,7 +134,10 @@ function updateScoreTable() {
         <td>${entry.initials}</td>
         <td>${entry.score}</td>
         `;
+        scoreTableBody.appendChild(row); // Adiciona a linha na tabela
     })
+
+    console.log('Tabela atualizada:', document.querySelector('#scoreTable tbody').innerHTML);
 }
 
 // Exibir o modal para inserir iniciais
@@ -132,11 +148,17 @@ function showInitialsModal() {
     const form = document.getElementById('initialsForm');
     form.onsubmit = (e) => {
         e.preventDefault();
-        const initials = document.getElementById('initials').value.toUpperCase();
+        const initials = document.getElementById('initials').ValueMax.toUpperCase();
+
+        if (initials.trim() === '') {
+            alert('Por favor, insira suas iniciais!');
+            return;
+        }
+
         saveScore(initials, score);
-        modal.style.display = 'none';
-        restartGame();
-    };
+        modal.style.display = 'none'; // Fecha o modal
+        restartGame(); // Reinicia o jogo após salvar a pontuação
+    }
 }
 
 // Função para atualizar o jogo
@@ -144,6 +166,8 @@ function updateGame() {
     if (!gameOver) { // Só atualiza o jogo se não estiver em estado de game over
         move();
         draw();
+        } else {
+            showInitialsModal(); // Exibe o modal para salvar a pontuação
         }
 }
 
@@ -173,6 +197,9 @@ function restartGame() {
 
  // Inicia o loop novamente
  gameLoop();
+
+ // Fecha o modal caso esteja aberto
+ document.getElementById('initialsModal').style.display = 'none';
 
 }
 
